@@ -1,0 +1,6 @@
+{
+  "name": "Shree Balaji Mobiles",
+  "description": "Premium e-commerce mobile and electronics store inspired by top multi-brand retailers, featuring daily mega sales, brand storefronts, best-selling smartphones, and electronics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
