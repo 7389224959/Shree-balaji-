@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { Product, CITIES_LIST } from './data';
 
 export interface CartItem {
@@ -17,13 +17,30 @@ export interface ToastMessage {
   type?: 'success' | 'info' | 'error';
 }
 
+export interface DeliveryLocation {
+  city: string;
+  pincode: string;
+  state: string;
+  deliveryTime: string;
+  isAutoDetected?: boolean;
+}
+
+const DEFAULT_LOCATION: DeliveryLocation = {
+  city: 'Bhilai',
+  pincode: '490022',
+  state: 'Chhattisgarh',
+  deliveryTime: '48 Hours',
+  isAutoDetected: false
+};
+
 interface CartContextType {
   cart: CartItem[];
   wishlist: string[];
-  selectedCity: (typeof CITIES_LIST)[0];
+  selectedCity: DeliveryLocation;
+  isLocationModalOpen: boolean;
+  isDetectingLocation: boolean;
   isCartOpen: boolean;
   isQuickViewOpen: boolean;
-  isLocationModalOpen: boolean;
   isSearchOpen: boolean;
   isAuthModalOpen: boolean;
   quickViewProduct: Product | null;
@@ -46,7 +63,8 @@ interface CartContextType {
   openQuickView: (product: Product) => void;
   closeQuickView: () => void;
   setLocationModalOpen: (open: boolean) => void;
-  setSelectedCity: (city: (typeof CITIES_LIST)[0]) => void;
+  setSelectedCity: (city: DeliveryLocation) => void;
+  detectLocation: (silent?: boolean) => Promise<void>;
   setSearchOpen: (open: boolean) => void;
   setSearchQuery: (query: string) => void;
   setAuthModalOpen: (open: boolean) => void;
@@ -67,42 +85,13 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('balaji_cart');
-        return saved ? JSON.parse(saved) : [];
-      } catch {
-        return [];
-      }
-    }
-    return [];
-  });
+  // Deterministic initial state for SSR
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [wishlist, setWishlist] = useState<string[]>([]);
+  const [selectedCity, setSelectedCityState] = useState<DeliveryLocation>(DEFAULT_LOCATION);
+  const isStorageLoadedRef = useRef(false);
 
-  const [wishlist, setWishlist] = useState<string[]>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('balaji_wishlist');
-        return saved ? JSON.parse(saved) : [];
-      } catch {
-        return [];
-      }
-    }
-    return [];
-  });
-
-  const [selectedCity, setSelectedCityState] = useState<(typeof CITIES_LIST)[0]>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('balaji_city');
-        return saved ? JSON.parse(saved) : CITIES_LIST[0];
-      } catch {
-        return CITIES_LIST[0];
-      }
-    }
-    return CITIES_LIST[0];
-  });
-
+  const [isDetectingLocation, setIsDetectingLocation] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
@@ -116,23 +105,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [discountAmount, setDiscountAmount] = useState(500);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  // Save changes
-  useEffect(() => {
-    try {
-      localStorage.setItem('balaji_cart', JSON.stringify(cart));
-    } catch {
-      // ignore
-    }
-  }, [cart]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('balaji_wishlist', JSON.stringify(wishlist));
-    } catch {
-      // ignore
-    }
-  }, [wishlist]);
-
   const addToast = (title: string, description?: string, type: 'success' | 'info' | 'error' = 'success') => {
     const id = Date.now().toString() + Math.random().toString().slice(2, 6);
     setToasts((prev) => [...prev, { id, title, description, type }]);
@@ -145,7 +117,153 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
-  const setSelectedCity = (city: (typeof CITIES_LIST)[0]) => {
+  // Auto-detect device location function
+  const detectLocation = async (silent = false): Promise<void> => {
+    setIsDetectingLocation(true);
+
+    if (typeof window !== 'undefined' && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            // Query reverse geocode
+            const res = await fetch(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+            );
+            
+            if (res.ok) {
+              const data = await res.json();
+              const rawPincode = data.postcode || '';
+              const pincode = rawPincode && /^\d{6}$/.test(rawPincode) ? rawPincode : (data.postcode || '490022');
+              const city = data.city || data.locality || data.principalSubdivision || 'Current Location';
+              const state = data.principalSubdivision || 'India';
+
+              // Determine delivery SLA
+              const isMetro = ['bengaluru', 'bangalore', 'chennai', 'hyderabad', 'mumbai', 'delhi', 'pune'].some((m) =>
+                city.toLowerCase().includes(m)
+              );
+              const deliveryTime = isMetro ? '2-Hour Delivery' : '48 Hours';
+
+              const newLoc: DeliveryLocation = {
+                city,
+                pincode,
+                state,
+                deliveryTime,
+                isAutoDetected: true
+              };
+
+              setSelectedCityState(newLoc);
+              try {
+                localStorage.setItem('balaji_city', JSON.stringify(newLoc));
+              } catch {}
+
+              if (!silent) {
+                addToast('Location Detected 📍', `Delivering to ${city} (${pincode}) - ${deliveryTime}`, 'success');
+              }
+            }
+          } catch {
+            if (!silent) {
+              addToast('Location Notice', 'Could not reverse-geocode GPS coordinates. Using standard delivery.', 'info');
+            }
+          } finally {
+            setIsDetectingLocation(false);
+          }
+        },
+        async () => {
+          // Geolocation prompt was dismissed or denied -> Try IP lookup
+          try {
+            const ipRes = await fetch('https://ipapi.co/json/');
+            if (ipRes.ok) {
+              const ipData = await ipRes.json();
+              const pincode = ipData.postal && /^\d{6}$/.test(ipData.postal) ? ipData.postal : '490022';
+              const city = ipData.city || 'Current Location';
+              const state = ipData.region || 'India';
+              const isMetro = ['bengaluru', 'bangalore', 'chennai', 'hyderabad', 'mumbai', 'delhi', 'pune'].some((m) =>
+                city.toLowerCase().includes(m)
+              );
+              const deliveryTime = isMetro ? '2-Hour Delivery' : '48 Hours';
+
+              const newLoc: DeliveryLocation = {
+                city,
+                pincode,
+                state,
+                deliveryTime,
+                isAutoDetected: true
+              };
+
+              setSelectedCityState(newLoc);
+              try {
+                localStorage.setItem('balaji_city', JSON.stringify(newLoc));
+              } catch {}
+
+              if (!silent) {
+                addToast('Location Updated 📍', `Estimated location: ${city} (${pincode})`, 'info');
+              }
+            }
+          } catch {}
+          setIsDetectingLocation(false);
+        },
+        { timeout: 7000, enableHighAccuracy: true }
+      );
+    } else {
+      setIsDetectingLocation(false);
+    }
+  };
+
+  // Hydrate client-side state from localStorage on mount asynchronously
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const timer = setTimeout(() => {
+      try {
+        const savedCity = localStorage.getItem('balaji_city');
+        if (savedCity) {
+          setSelectedCityState(JSON.parse(savedCity));
+        } else {
+          void detectLocation(true);
+        }
+
+        const savedCart = localStorage.getItem('balaji_cart');
+        if (savedCart) {
+          setCart(JSON.parse(savedCart));
+        }
+
+        const savedWishlist = localStorage.getItem('balaji_wishlist');
+        if (savedWishlist) {
+          setWishlist(JSON.parse(savedWishlist));
+        }
+      } catch {
+        // ignore
+      } finally {
+        isStorageLoadedRef.current = true;
+      }
+    }, 0);
+
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Save changes to localStorage only after initial load completes
+  useEffect(() => {
+    if (!isStorageLoadedRef.current) return;
+    try {
+      localStorage.setItem('balaji_cart', JSON.stringify(cart));
+    } catch {
+      // ignore
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    if (!isStorageLoadedRef.current) return;
+    try {
+      localStorage.setItem('balaji_wishlist', JSON.stringify(wishlist));
+    } catch {
+      // ignore
+    }
+  }, [wishlist]);
+
+  const setSelectedCity = (city: DeliveryLocation) => {
     setSelectedCityState(city);
     try {
       localStorage.setItem('balaji_city', JSON.stringify(city));
@@ -273,9 +391,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         cart,
         wishlist,
         selectedCity,
+        isLocationModalOpen,
+        isDetectingLocation,
+        detectLocation,
         isCartOpen,
         isQuickViewOpen,
-        isLocationModalOpen,
         isSearchOpen,
         isAuthModalOpen,
         quickViewProduct,

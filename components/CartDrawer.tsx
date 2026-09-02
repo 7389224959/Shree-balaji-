@@ -116,7 +116,7 @@ export default function CartDrawer() {
               </div>
               <h4 className="text-2xl font-black text-slate-900">Order Placed Successfully!</h4>
               <p className="text-sm text-slate-600 max-w-xs">
-                Thank you for shopping at <strong>Balaji Mobiles</strong>. Your express delivery package is being packed at our {selectedCity.city} hub.
+                Thank you for shopping at <strong>Shree Balaji Mobiles</strong>. Your express delivery package is being packed at our {selectedCity.city} hub.
               </p>
               <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 w-full text-left space-y-1">
                 <div>Order ID: <strong>#{orderId}</strong></div>
