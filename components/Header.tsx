@@ -123,14 +123,17 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-3">
         {/* Row 1: Brand Logo on Left, Action Buttons on Right */}
         <div className="flex items-center justify-between gap-3">
-          {/* Logo: Shree Balaji.com */}
+          {/* Logo: Shree Balaji Mobiles */}
           <a href="#" className="flex flex-col group cursor-pointer" id="header-logo-link">
             <div className="flex items-center space-x-1.5">
               <span className="text-xl sm:text-2xl font-black text-amber-500 tracking-tight font-sans">
                 Shree
               </span>
               <span className="text-2xl sm:text-3xl font-black text-white tracking-tighter italic font-serif">
-                Balaji<span className="text-orange-500 font-sans not-italic text-lg sm:text-xl font-bold">.com</span>
+                Balaji
+              </span>
+              <span className="text-xl sm:text-2xl font-black text-orange-500 tracking-tight font-sans">
+                Mobiles
               </span>
               <div className="w-2 h-2 rounded-full bg-orange-500 animate-ping ml-0.5 hidden xs:inline-block" />
             </div>
