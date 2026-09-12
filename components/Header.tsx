@@ -83,7 +83,7 @@ export default function Header() {
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-1.5 text-amber-400 font-medium">
               <Zap className="w-3 h-3 animate-pulse text-amber-400" />
-              <span suppressHydrationWarning>Shree Balaji Express: Fast Dispatch to {selectedCity.pincode}</span>
+              <span suppressHydrationWarning>Shri Balaji Express: Fast Dispatch to {selectedCity.pincode}</span>
             </div>
             <span className="text-white/20">•</span>
             <div className="flex items-center space-x-1 text-slate-300">
@@ -123,11 +123,11 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-3">
         {/* Row 1: Brand Logo on Left, Action Buttons on Right */}
         <div className="flex items-center justify-between gap-3">
-          {/* Logo: Shree Balaji Mobiles */}
+          {/* Logo: Shri Balaji Mobiles */}
           <a href="#" className="flex flex-col group cursor-pointer" id="header-logo-link">
             <div className="flex items-center space-x-1.5">
               <span className="text-xl sm:text-2xl font-black text-amber-500 tracking-tight font-sans">
-                Shree
+                Shri
               </span>
               <span className="text-2xl sm:text-3xl font-black text-white tracking-tighter italic font-serif">
                 Balaji

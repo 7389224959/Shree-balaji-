@@ -1,5 +1,5 @@
 {
-  "name": "Shree Balaji Mobiles",
+  "name": "Shri Balaji Mobiles",
   "description": "Premium e-commerce mobile and electronics store inspired by top multi-brand retailers, featuring daily mega sales, brand storefronts, best-selling smartphones, and electronics.",
   "requestFramePermissions": ["geolocation"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

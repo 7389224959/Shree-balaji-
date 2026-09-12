@@ -56,7 +56,7 @@ export default function AuthModal() {
               </div>
               <div>
                 <h3 className="font-bold text-slate-900 text-base">{userName}</h3>
-                <p className="text-xs text-slate-500 font-normal">+91 {phoneNumber} • Shree Balaji Elite Member</p>
+                <p className="text-xs text-slate-500 font-normal">+91 {phoneNumber} • Shri Balaji Elite Member</p>
               </div>
             </div>
 
@@ -116,7 +116,7 @@ export default function AuthModal() {
                 <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-md">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-xs text-blue-200 uppercase font-semibold">Shree Balaji Reward Coins</div>
+                      <div className="text-xs text-blue-200 uppercase font-semibold">Shri Balaji Reward Coins</div>
                       <div className="text-2xl font-black mt-0.5">1,250 Coins (₹1,250 Value)</div>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-amber-300">

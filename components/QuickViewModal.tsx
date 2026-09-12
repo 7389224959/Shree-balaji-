@@ -49,7 +49,7 @@ export default function QuickViewModal() {
     if (navigator.share) {
       navigator.share({
         title: quickViewProduct.name,
-        text: `Check out ${quickViewProduct.name} at Shree Balaji Mobiles for ₹${quickViewProduct.discountedPrice.toLocaleString('en-IN')}`,
+        text: `Check out ${quickViewProduct.name} at Shri Balaji Mobiles for ₹${quickViewProduct.discountedPrice.toLocaleString('en-IN')}`,
         url: window.location.href
       }).catch(() => {});
     } else {

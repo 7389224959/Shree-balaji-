@@ -93,7 +93,7 @@ export default function Footer() {
               </div>
               <div className="flex items-baseline space-x-1.5">
                 <span className="text-xl sm:text-2xl font-black tracking-tight text-amber-500 font-sans">
-                  SHREE
+                  SHRI
                 </span>
                 <span className="text-xl sm:text-2xl font-black tracking-tight text-white font-sans">
                   BALAJI
@@ -117,7 +117,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center space-x-2 text-slate-300">
                 <Mail className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>Email Support: <strong>support@shreebalajimobiles.com</strong></span>
+                <span>Email Support: <strong>support@shribalajimobiles.com</strong></span>
               </div>
               <div className="flex items-center space-x-2 text-slate-300">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -129,14 +129,14 @@ export default function Footer() {
           {/* Accordion Columns for Mobile / Responsive Grid for Desktop */}
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
             
-            {/* Accordion 1: About Shree Balaji */}
+            {/* Accordion 1: About Shri Balaji */}
             <div className="border-b sm:border-b-0 border-white/5 pb-4 sm:pb-0">
               <button
                 onClick={() => toggleSection('about')}
                 className="w-full flex items-center justify-between sm:cursor-default text-left font-bold text-white text-base mb-3 group"
                 id="footer-accordion-about-btn"
               >
-                <span>About Shree Balaji</span>
+                <span>About Shri Balaji</span>
                 <ChevronDown className={`w-4 h-4 sm:hidden transition-transform ${openSection === 'about' ? 'rotate-180 text-blue-400' : ''}`} />
               </button>
               
@@ -326,7 +326,7 @@ export default function Footer() {
 
         {/* Copyright notice */}
         <div className="mt-8 pt-6 border-t border-white/5 text-center text-xs text-slate-500">
-          <p>Copyright 2024 © Shree Balaji Mobiles. All Rights Reserved.</p>
+          <p>Copyright 2024 © Shri Balaji Mobiles. All Rights Reserved.</p>
           <p className="mt-1 text-[11px] text-slate-600">
             Inspired by top retail standards. All brand names, logos, and trademarks are property of their respective manufacturers.
           </p>

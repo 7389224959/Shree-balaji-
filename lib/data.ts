@@ -82,7 +82,7 @@ export const HERO_BANNERS: BannerSlide[] = [
   },
   {
     id: 'banner-2',
-    badge: 'SHREE BALAJI GRAND FESTIVAL SALE',
+    badge: 'SHRI BALAJI GRAND FESTIVAL SALE',
     badgeColor: 'bg-orange-500 text-white',
     title: 'Mega Tech Fest',
     highlight: 'Up to 50% Off on Top Smartphones',

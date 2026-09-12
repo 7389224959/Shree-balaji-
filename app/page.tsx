@@ -22,7 +22,7 @@ import MobileBottomNav from '@/components/MobileBottomNav';
 export default function HomePage() {
   return (
     <CartProvider>
-      <div className="min-h-screen bg-white flex flex-col antialiased text-slate-900 font-sans selection:bg-blue-600 selection:text-white pb-16 md:pb-0" id="shree-balaji-mobiles-app">
+      <div className="min-h-screen bg-white flex flex-col antialiased text-slate-900 font-sans selection:bg-blue-600 selection:text-white pb-16 md:pb-0" id="shri-balaji-mobiles-app">
         
         {/* 1. Header & Navigation with Category Row */}
         <Header />

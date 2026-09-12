@@ -101,7 +101,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeBrandFilter, setActiveBrandFilter] = useState<string | null>(null);
   const [activeCategoryFilter, setActiveCategoryFilter] = useState<string | null>(null);
-  const [appliedCoupon, setAppliedCoupon] = useState<string | null>('SHREE500');
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>('SHRI500');
   const [discountAmount, setDiscountAmount] = useState(500);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
@@ -351,12 +351,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const applyCoupon = (code: string): boolean => {
     const cleanCode = code.trim().toUpperCase();
-    if (cleanCode === 'SHREE1000' || cleanCode === 'BALAJI1000' || cleanCode === 'SHREEBALAJI1000') {
+    if (cleanCode === 'SHRI1000' || cleanCode === 'SHREE1000' || cleanCode === 'BALAJI1000' || cleanCode === 'SHRIBALAJI1000' || cleanCode === 'SHREEBALAJI1000') {
       setAppliedCoupon(cleanCode);
       setDiscountAmount(1000);
       addToast('Promo Code Applied! 🎉', '₹1,000 instant festival discount applied.', 'success');
       return true;
-    } else if (cleanCode === 'SHREE500' || cleanCode === 'BALAJI500' || cleanCode === 'SHREEBALAJI500' || cleanCode === 'FESTIVAL500') {
+    } else if (cleanCode === 'SHRI500' || cleanCode === 'SHREE500' || cleanCode === 'BALAJI500' || cleanCode === 'SHRIBALAJI500' || cleanCode === 'SHREEBALAJI500' || cleanCode === 'FESTIVAL500') {
       setAppliedCoupon(cleanCode);
       setDiscountAmount(500);
       addToast('Promo Code Applied! 🎉', '₹500 instant mobile discount applied.', 'success');
@@ -367,7 +367,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       addToast('Welcome Coupon Applied!', '₹750 first-order savings applied.', 'success');
       return true;
     } else {
-      addToast('Invalid Coupon', 'Please try SHREE500 or SHREE1000 for festival discounts.', 'error');
+      addToast('Invalid Coupon', 'Please try SHRI500 or SHRI1000 for festival discounts.', 'error');
       return false;
     }
   };

@@ -230,11 +230,11 @@ export default function LocationModal() {
           <div className="mt-4 p-3 rounded-2xl bg-amber-50 border border-amber-200/70 text-xs text-amber-900 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Navigation className="w-4 h-4 text-orange-600 shrink-0" />
-              <span>Need it today? <strong>250+ Shree Balaji stores open now</strong></span>
+              <span>Need it today? <strong>250+ Shri Balaji stores open now</strong></span>
             </div>
             <button
               onClick={() => {
-                addToast('Store Locator', 'Locating closest Shree Balaji Mobiles outlet near you...', 'info');
+                addToast('Store Locator', 'Locating closest Shri Balaji Mobiles outlet near you...', 'info');
                 setLocationModalOpen(false);
               }}
               className="text-[11px] font-bold text-orange-700 hover:underline shrink-0 ml-2"
