@@ -11,7 +11,9 @@ import {
   Truck,
   RotateCcw,
   CheckCircle2,
-  Share2
+  Share2,
+  BatteryCharging,
+  Award
 } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 
@@ -120,6 +122,32 @@ export default function QuickViewModal() {
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
                   {quickViewProduct.name}
                 </h3>
+
+                {/* Refurbished Certified Banner if applicable */}
+                {quickViewProduct.isRefurbished && (
+                  <div className="mt-2.5 p-3 rounded-xl bg-emerald-50 border border-emerald-200/80 text-emerald-950">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-1.5 font-bold text-xs text-emerald-800">
+                        <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                        <span>Shri Balaji Certified 2nd Hand</span>
+                      </div>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-600 text-white">
+                        {quickViewProduct.conditionGrade || 'Grade A+'}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-emerald-200/60 text-[11px] text-emerald-900">
+                      <div className="flex items-center space-x-1.5">
+                        <BatteryCharging className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>{quickViewProduct.batteryHealth || '95%+ Battery'}</span>
+                      </div>
+                      <div className="flex items-center space-x-1.5">
+                        <Award className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>{quickViewProduct.warrantyMonths || 12}M Store Warranty</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Rating & Stock */}
                 <div className="flex items-center space-x-3 mt-2">

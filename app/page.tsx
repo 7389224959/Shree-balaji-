@@ -4,6 +4,7 @@ import React from 'react';
 import { CartProvider } from '@/lib/cart-context';
 import Header from '@/components/Header';
 import HeroCarousel from '@/components/HeroCarousel';
+import RefurbishedPhonesSection from '@/components/RefurbishedPhonesSection';
 import MegaSaleSection from '@/components/MegaSaleSection';
 import ShopByBrands from '@/components/ShopByBrands';
 import BestSellingPhones from '@/components/BestSellingPhones';
@@ -33,10 +34,13 @@ export default function HomePage() {
           {/* 2. Hero Section: Auto-playing Carousel Banner */}
           <HeroCarousel />
 
-          {/* 3. 'Mega Sale' Section (Soft Peach/Light Gold Background, 50% Off, Add to Cart, Explore Now) */}
+          {/* 3. ⭐ PRIMARY BUSINESS: Premium Certified Refurbished & 2nd Hand Phones Section with All Indian Mobile Brands Logos */}
+          <RefurbishedPhonesSection />
+
+          {/* 4. 'Mega Sale' Section (Soft Peach/Light Gold Background, 50% Off, Add to Cart, Explore Now) */}
           <MegaSaleSection />
 
-          {/* 4. 'Shop by Brands' Section (Horizontal Scrolling Brand Logos) */}
+          {/* 5. 'Shop by Brands' Section (Horizontal Scrolling Brand Logos) */}
           <ShopByBrands />
 
           {/* 5. 'Best Selling Phones' Section (Dark Theme Luxury Contrast) */}

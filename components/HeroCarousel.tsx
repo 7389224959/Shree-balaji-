@@ -30,7 +30,8 @@ export default function HeroCarousel() {
   const slide = HERO_BANNERS[currentSlide];
 
   const handleCtaClick = () => {
-    const targetSection = document.getElementById('mega-sale-section');
+    const targetId = slide.id === 'banner-refurb-hub' ? 'refurbished-phones-section' : 'mega-sale-section';
+    const targetSection = document.getElementById(targetId) || document.getElementById('refurbished-phones-section');
     if (targetSection) {
       targetSection.scrollIntoView({ behavior: 'smooth' });
     }

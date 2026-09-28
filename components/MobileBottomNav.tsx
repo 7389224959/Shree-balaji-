@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Home, Grid, Flame, Heart, ShoppingBag, Search } from 'lucide-react';
+import { Home, Grid, Flame, Heart, ShoppingBag, Search, ShieldCheck } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 
 export default function MobileBottomNav() {
@@ -49,20 +49,20 @@ export default function MobileBottomNav() {
           <span className="text-[10px] font-medium text-slate-600 group-hover:text-[#003399] tracking-tight">Categories</span>
         </button>
 
-        {/* 3. Mega Deals (Hot Flame) */}
+        {/* 3. Refurbished Hub (Core Specialty) */}
         <button
-          onClick={() => scrollToSection('mega-sale-section')}
-          className="flex flex-col items-center justify-center h-full min-h-[48px] text-orange-600 transition-transform active:scale-95 cursor-pointer group"
-          id="mobile-nav-deals"
+          onClick={() => scrollToSection('refurbished-phones-section')}
+          className="flex flex-col items-center justify-center h-full min-h-[48px] text-emerald-600 transition-transform active:scale-95 cursor-pointer group"
+          id="mobile-nav-refurbished"
         >
           <div className="relative p-1">
-            <Flame className="w-5 h-5 text-orange-500 fill-orange-500 animate-pulse" />
+            <ShieldCheck className="w-5 h-5 text-emerald-600 fill-emerald-100" />
             <span className="absolute -top-1 -right-1 flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
           </div>
-          <span className="text-[10px] font-bold text-orange-600 tracking-tight">50% Deals</span>
+          <span className="text-[10px] font-black text-emerald-700 tracking-tight">Refurbished</span>
         </button>
 
         {/* 4. Wishlist */}

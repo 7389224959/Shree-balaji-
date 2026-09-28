@@ -1,6 +1,6 @@
 {
   "name": "Shri Balaji Mobiles",
-  "description": "Premium e-commerce mobile and electronics store inspired by top multi-brand retailers, featuring daily mega sales, brand storefronts, best-selling smartphones, and electronics.",
+  "description": "Premium multi-brand mobile store specializing in certified 2nd hand and refurbished smartphones with 52-point quality testing and warranty, featuring all Indian mobile brands and electronics.",
   "requestFramePermissions": ["geolocation"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

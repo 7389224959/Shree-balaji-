@@ -2,17 +2,17 @@ import type {Metadata} from 'next';
 import './globals.css'; // Global styles
 
 export const metadata: Metadata = {
-  title: 'Shri Balaji Mobiles | Multi-Brand Smartphone & Electronics Store',
-  description: 'Official online store of Shri Balaji Mobiles. Get best deals on Apple, Samsung, OnePlus, Google Pixel, and smart electronics with 2-hour express delivery.',
+  title: 'Shri Balaji Mobiles | Certified 2nd Hand & Refurbished Phones Store',
+  description: 'Premium multi-brand mobile store specializing in certified 2nd hand and refurbished smartphones with 52-point quality testing and warranty, featuring all Indian mobile brands and electronics.',
   openGraph: {
-    title: 'Shri Balaji Mobiles | Multi-Brand Smartphone & Electronics Store',
-    description: 'Official online store of Shri Balaji Mobiles with authorized warranty and express delivery.',
+    title: 'Shri Balaji Mobiles | Certified 2nd Hand & Refurbished Phones Store',
+    description: 'Premium multi-brand mobile store specializing in certified 2nd hand and refurbished smartphones with 52-point quality testing and warranty, featuring all Indian mobile brands and electronics.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Shri Balaji Mobiles',
-    description: 'Official online store of Shri Balaji Mobiles with authorized warranty and express delivery.',
+    description: 'Premium multi-brand mobile store specializing in certified 2nd hand and refurbished smartphones with 52-point quality testing and warranty, featuring all Indian mobile brands and electronics.',
   },
 };
 

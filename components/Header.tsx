@@ -26,6 +26,7 @@ import { useCart } from '@/lib/cart-context';
 import { TOP_CATEGORIES, PRODUCTS } from '@/lib/data';
 
 const categoryIconMap: Record<string, React.ReactNode> = {
+  ShieldCheck: <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500" />,
   Smartphone: <Smartphone className="w-5 h-5 sm:w-6 sm:h-6" />,
   Watch: <Watch className="w-5 h-5 sm:w-6 sm:h-6" />,
   Tv: <Tv className="w-5 h-5 sm:w-6 sm:h-6" />,
@@ -76,7 +77,8 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 bg-[#000000] text-white shadow-xl" id="main-header">
+    <>
+      <header className="sticky top-0 z-40 bg-[#000000] text-white shadow-xl" id="main-header">
       {/* Top Micro-Bar for Helpline & Trust Badges */}
       <div className="bg-[#0A0A0A] text-slate-400 text-[11px] py-1 px-4 sm:px-6 border-b border-white/10 hidden sm:block">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
@@ -183,61 +185,56 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Row 2: Delivery Time & Pincode directly below website name */}
-        <div className="mt-2.5 sm:mt-3 flex flex-col items-start" id="header-delivery-pincode-section">
-          {/* Big Bold Delivery Time Headline (e.g. 48 Hours) */}
-          <div
-            suppressHydrationWarning
-            className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white font-sans leading-none"
-          >
-            {selectedCity.deliveryTime || '48 Hours'}
+        {/* Row 2: Deliver to & Pincode directly below website name */}
+        <div className="mt-2 sm:mt-2.5 flex items-center space-x-2 flex-wrap gap-y-1" id="header-delivery-pincode-section">
+          <div className="flex items-center space-x-1.5 text-xs sm:text-sm text-slate-300">
+            <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+            <span className="text-slate-400 font-medium">Deliver to:</span>
           </div>
 
           {/* Pincode with Dropdown Arrow */}
-          <div className="flex items-center space-x-2 mt-1.5">
-            <button
-              onClick={() => setLocationModalOpen(true)}
-              className="flex items-center space-x-1.5 text-white/90 hover:text-orange-400 transition-colors group cursor-pointer"
-              id="header-pincode-selector-btn"
-              title="Click to change pincode or auto-detect from device"
-            >
-              <span
-                suppressHydrationWarning
-                className="text-base sm:text-lg font-bold tracking-wide text-white group-hover:text-orange-400"
-              >
-                {selectedCity.pincode}
-              </span>
-              <ChevronDown className="w-4 h-4 text-white/70 group-hover:text-orange-400 group-hover:translate-y-0.5 transition-transform" />
-            </button>
-
-            <span className="text-xs text-white/50">•</span>
+          <button
+            onClick={() => setLocationModalOpen(true)}
+            className="flex items-center space-x-1.5 text-white/90 hover:text-orange-400 transition-colors group cursor-pointer"
+            id="header-pincode-selector-btn"
+            title="Click to change pincode or auto-detect from device"
+          >
             <span
               suppressHydrationWarning
-              className="text-xs text-slate-300 truncate max-w-[150px] sm:max-w-none"
+              className="text-sm sm:text-base font-bold tracking-wide text-white group-hover:text-orange-400"
             >
-              {selectedCity.city}
+              {selectedCity.pincode}
             </span>
+            <ChevronDown className="w-4 h-4 text-white/70 group-hover:text-orange-400 group-hover:translate-y-0.5 transition-transform" />
+          </button>
 
-            {/* Quick Auto-Detect Trigger Button */}
-            <button
-              onClick={() => detectLocation(false)}
-              disabled={isDetectingLocation}
-              className="hidden xs:inline-flex items-center space-x-1 text-[10px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full hover:bg-emerald-900/60 transition-colors ml-1"
-              title="Auto-detect pincode from device GPS"
-            >
-              {isDetectingLocation ? (
-                <>
-                  <Loader2 className="w-3 h-3 animate-spin text-emerald-400" />
-                  <span>Locating...</span>
-                </>
-              ) : (
-                <>
-                  <LocateFixed className="w-3 h-3 text-emerald-400" />
-                  <span>Auto GPS</span>
-                </>
-              )}
-            </button>
-          </div>
+          <span className="text-xs text-white/50">•</span>
+          <span
+            suppressHydrationWarning
+            className="text-xs sm:text-sm text-slate-300 truncate max-w-[150px] sm:max-w-none"
+          >
+            {selectedCity.city}
+          </span>
+
+          {/* Quick Auto-Detect Trigger Button */}
+          <button
+            onClick={() => detectLocation(false)}
+            disabled={isDetectingLocation}
+            className="inline-flex items-center space-x-1 text-[10px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full hover:bg-emerald-900/60 transition-colors ml-1"
+            title="Auto-detect pincode from device GPS"
+          >
+            {isDetectingLocation ? (
+              <>
+                <Loader2 className="w-3 h-3 animate-spin text-emerald-400" />
+                <span>Locating...</span>
+              </>
+            ) : (
+              <>
+                <LocateFixed className="w-3 h-3 text-emerald-400" />
+                <span>Auto GPS</span>
+              </>
+            )}
+          </button>
         </div>
 
         {/* Row 3: Prominent Rounded Full-Width White Search Bar (Search for "Smartphones") */}
@@ -336,68 +333,77 @@ export default function Header() {
           )}
         </div>
       </div>
-
-      {/* Row 4: Horizontal Category Slider (Clean Light/Dark Transition with Rounded Icons) */}
-      <div
-        className="bg-white text-slate-900 border-t border-slate-100 px-4 sm:px-6 py-3 overflow-x-auto no-scrollbar shadow-xs"
-        id="header-category-row"
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-start sm:justify-center gap-6 sm:gap-9 min-w-max">
-          {/* All Categories Pill */}
-          <div
-            onClick={() => setActiveCategoryFilter(null)}
-            className="flex flex-col items-center gap-1.5 cursor-pointer group"
-            id="category-pill-all"
-          >
-            <div
-              className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${
-                activeCategoryFilter === null
-                  ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20 scale-105'
-                  : 'bg-slate-100 text-slate-700 group-hover:bg-orange-50 group-hover:text-orange-600'
-              }`}
-            >
-              <Sparkles className="w-6 h-6" />
-            </div>
-            <span
-              className={`text-[11px] font-bold tracking-tight text-center ${
-                activeCategoryFilter === null ? 'text-orange-600' : 'text-slate-700'
-              }`}
-            >
-              All Store
-            </span>
-          </div>
-
-          {/* Dynamic Categories */}
-          {TOP_CATEGORIES.map((cat) => {
-            const isActive = activeCategoryFilter === cat.id;
-            return (
-              <div
-                key={cat.id}
-                onClick={() => setActiveCategoryFilter(isActive ? null : cat.id)}
-                className="flex flex-col items-center gap-1.5 cursor-pointer group"
-                id={`category-pill-${cat.id}`}
-              >
-                <div
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all overflow-hidden relative ${
-                    isActive
-                      ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20 scale-105'
-                      : 'bg-slate-100 text-slate-700 group-hover:bg-slate-200/80 group-hover:text-slate-900'
-                  }`}
-                >
-                  {categoryIconMap[cat.iconName] || <Smartphone className="w-6 h-6" />}
-                </div>
-                <span
-                  className={`text-[11px] font-bold tracking-tight text-center whitespace-nowrap ${
-                    isActive ? 'text-orange-600' : 'text-slate-700'
-                  }`}
-                >
-                  {cat.name}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </header>
-  );
+
+    {/* Row 4: Horizontal Category Slider (Placed in normal page flow so it scrolls off-screen cleanly with zero flicker) */}
+    <div
+      className="bg-white text-slate-900 border-b border-slate-200 shadow-xs px-4 sm:px-6 py-3 overflow-x-auto no-scrollbar"
+      id="header-category-row"
+    >
+      <div className="max-w-7xl mx-auto flex items-center justify-start sm:justify-center gap-6 sm:gap-9 min-w-max">
+        {/* All Categories Pill */}
+        <div
+          onClick={() => setActiveCategoryFilter(null)}
+          className="flex flex-col items-center gap-1.5 cursor-pointer group"
+          id="category-pill-all"
+        >
+          <div
+            className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${
+              activeCategoryFilter === null
+                ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20 scale-105'
+                : 'bg-slate-100 text-slate-700 group-hover:bg-orange-50 group-hover:text-orange-600'
+            }`}
+          >
+            <Sparkles className="w-6 h-6" />
+          </div>
+          <span
+            className={`text-[11px] font-bold tracking-tight text-center ${
+              activeCategoryFilter === null ? 'text-orange-600' : 'text-slate-700'
+            }`}
+          >
+            All Store
+          </span>
+        </div>
+
+        {/* Dynamic Categories */}
+        {TOP_CATEGORIES.map((cat) => {
+          const isActive = activeCategoryFilter === cat.id;
+          return (
+            <div
+              key={cat.id}
+              onClick={() => {
+                if (cat.id === 'refurbished') {
+                  const el = document.getElementById('refurbished-phones-section');
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }
+                setActiveCategoryFilter(isActive ? null : cat.id);
+              }}
+              className="flex flex-col items-center gap-1.5 cursor-pointer group"
+              id={`category-pill-${cat.id}`}
+            >
+              <div
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all overflow-hidden relative ${
+                  isActive
+                    ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20 scale-105'
+                    : 'bg-slate-100 text-slate-700 group-hover:bg-slate-200/80 group-hover:text-slate-900'
+                }`}
+              >
+                {categoryIconMap[cat.iconName] || <Smartphone className="w-6 h-6" />}
+              </div>
+              <span
+                className={`text-[11px] font-bold tracking-tight text-center whitespace-nowrap ${
+                  isActive ? 'text-orange-600' : 'text-slate-700'
+                }`}
+              >
+                {cat.name}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </>
+);
 }
